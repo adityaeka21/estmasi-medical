@@ -1,68 +1,66 @@
 # Laporan Proyek Machine Learning
-### Nama :
-### Nim :
-### Kelas :
+### Nama : Aditya Eka Purwanto
+### Nim : 211351005
+### Kelas : Malam B
 
 ## Domain Proyek
 
-Pada bagian ini, kamu perlu menuliskan latar belakang yang relevan dengan proyek yang diangkat.
-
-**Rubrik/Kriteria Tambahan (Opsional)**:
-- Jelaskan mengapa dan bagaimana masalah tersebut harus diselesaikan
-- Menyertakan hasil riset terkait atau referensi. Referensi yang diberikan harus berasal dari sumber yang kredibel dan author yang jelas.
-  
-  Format Referensi: [Judul Referensi](https://scholar.google.com/) 
+Asuransi kesehatan sangat penting karena memberikan akses ke perawatan medis yang terjangkau, melindungi individu dari beban keuangan yang besar, mendorong pencegahan dan pengobatan dini, serta meningkatkan kualitas hidup dan produktivitas.
 
 ## Business Understanding
 
-Pada bagian ini, kamu perlu menjelaskan proses klarifikasi masalah.
+Proyek estimasi harga asuransi kesehatan menjadi yang penting juga karena memberikan solusi untuk menentukan premi asuransi yang lebih adil, memungkinkan calon peserta asuransi membuat keputusan yang lebih baik, membantu perusahaan asuransi mengelola risiko, meningkatkan efisiensi operasional, dan memfasilitasi pengembangan produk asuransi yang inovatif.
 
 Bagian laporan ini mencakup:
 
 ### Problem Statements
 
 Menjelaskan pernyataan masalah latar belakang:
-- Pernyataan Masalah 1
-- Pernyataan Masalah 2
-- Pernyataan Masalah n
+- Calon peserta yang tidak tau kisaran harga asuransi
 
 ### Goals
 
 Menjelaskan tujuan dari pernyataan masalah:
-- Jawaban pernyataan masalah 1
-- Jawaban pernyataan masalah 2
-- Jawaban pernyataan masalah n
+- Diharapkan agar calon peserta asuransi memiliki estimasi berapa biaya yang harus mereka keluarkan untuk membayar asuransi tersebut dengan beberapa kriteria yang akan mereka input.
 
-Semua poin di atas harus diuraikan dengan jelas. Anda bebas menuliskan berapa pernyataan masalah dan juga goals yang diinginkan.
 
-**Rubrik/Kriteria Tambahan (Opsional)**:
-- Menambahkan bagian “Solution Statement” yang menguraikan cara untuk meraih goals. Bagian ini dibuat dengan ketentuan sebagai berikut: 
-
-    ### Solution statements
-    - Mengajukan 2 atau lebih solution statement. Misalnya, menggunakan dua atau lebih algoritma untuk mencapai solusi yang diinginkan atau melakukan improvement pada baseline model dengan hyperparameter tuning.
-    - Solusi yang diberikan harus dapat terukur dengan metrik evaluasi.
+### Solution statements
+- Mengajukan 2 atau lebih solution statement. Misalnya, menggunakan dua atau lebih algoritma untuk mencapai solusi yang diinginkan atau melakukan improvement pada baseline model dengan hyperparameter tuning.
+- Solusi yang diberikan harus dapat terukur dengan metrik evaluasi.
+- Membuat sebuah sistem yang dapat melakukan estimasi harga premi asuransi kesehatan yang dapat diakses oleh calon peserta asuransi berbasis web
+- Model yang dibuat menggunakan metode estimasi dengan algoritma regresi linear 
 
 ## Data Understanding
-Paragraf awal bagian ini menjelaskan informasi mengenai data yang Anda gunakan dalam proyek. dataset wajib menggunakan [kaggle](https://www.kaggle.com/) dan **atribut yang digunakan minimal 8 atribut**. Sertakan juga sumber atau tautan untuk mengunduh dataset.<br> 
+dataset yang digunakan diambil dari Kaggle milik [MIRI CHOI](https://www.kaggle.com/mirichoi0218) dataset tersebut berisi sekumpulan data biaya yang dibayarkan untuk asuransi kesehatan yang berisi umur, jenis kelamin, BMI, jumlah anak, wilayah peserta, perokok atau bukan dan biaya yang dibayarkan
 
-Contoh: [Heart Failure Prediction Dataset](https://www.kaggle.com/datasets/fedesoriano/heart-failure-prediction).
+[Medical Cost Personal Datasets](https://www.kaggle.com/datasets/mirichoi0218/insurance/data)
 
-Selanjutnya uraikanlah seluruh variabel atau fitur pada data. Sebagai contoh:  
-
-### Variabel-variabel pada Heart Failure Prediction Dataset adalah sebagai berikut:
-- Age : merupakan umur pasien dalam satuan tahun.
-- Sex : merupakan jenis kelamin pasien meliputi [M: Male, F: Female].
-- dst
-
-**Rubrik/Kriteria Tambahan (Opsional)**:
-- Melakukan beberapa tahapan yang diperlukan untuk memahami data, contohnya teknik visualisasi data atau exploratory data analysis.
+### Variabel-variabel:
+Age: usia penerima manfaat utama
+Sex: jenis kelamin peserta asuransi, perempuan, laki-laki
+BMI: Indeks massa tubuh, memberikan pemahaman tentang tubuh, berat badan yang relatif tinggi atau rendah terhadap tinggi badan,
+indeks obyektif berat badan (kg/m^2) dengan menggunakan rasio tinggi dan berat badan, idealnya 18,5 sampai 24,9
+Children: Jumlah anak yang ditanggung oleh asuransi kesehatan / Jumlah tanggungan
+Smoker: Merokok
+Region: wilayah tempat tinggal penerima manfaat di AS, timur laut, tenggara, barat daya, barat laut.
+Charges: Biaya pengobatan perorangan yang ditagihkan oleh asuransi kesehatan
 
 ## Data Preparation
-Pada bagian ini Anda menerapkan dan menyebutkan teknik data preparation yang dilakukan. Teknik yang digunakan pada notebook dan laporan harus berurutan.
+## Import Library
+Library yang dibutuhkan dalam pembuatan model estimasi premi asuransi kesehatan yaitu:
+``bash
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.preprocessing import LabelEncoder
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+``
 
-**Rubrik/Kriteria Tambahan (Opsional)**: 
-- Menjelaskan proses data preparation yang dilakukan
-- Menjelaskan alasan mengapa diperlukan tahapan data preparation tersebut.
+## Data Cleaning
+
+Untuk melakukan sebuah proses menggunakan algoritma regresi linear maka tipe data yang dibutuhkan adalah integer. Terdapat 3 kolom dalam dataset yang memiliki tiper data object, maka dari itu perlu dilakukannya konversi tipe data menjadi integer menggunakan kode
 
 ## Modeling
 Tahapan ini membahas mengenai model machine learning yang digunakan untuk menyelesaikan permasalahan. Anda perlu menjelaskan tahapan dan parameter yang digunakan pada proses pemodelan.
@@ -85,7 +83,7 @@ Ingatlah, metrik evaluasi yang digunakan harus sesuai dengan konteks data, probl
 - Menjelaskan formula metrik dan bagaimana metrik tersebut bekerja.
 
 ## Deployment
-pada bagian ini anda memberikan link project yang diupload melalui streamlit share. boleh ditambahkan screen shoot halaman webnya.
+[Hasil Deploy](https://estimasi-medical-adit.streamlit.app/).
 
 **---Ini adalah bagian akhir laporan---**
 
