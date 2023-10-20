@@ -86,6 +86,11 @@ file.upload()
 ```bash
 df = pd.read_csv('/content/medical-insurance-price-prediction/Medical_insurance.csv')
 ```
+setelah import dataset maka perlu dilakukan pengecekan null values menggunakan cara:
+```bash
+sns.heatmap(df.isnull())
+```
+![Alt text](image.png)
 ## Data Cleaning
 
 Untuk melakukan sebuah proses menggunakan algoritma regresi linear maka tipe data yang dibutuhkan adalah integer. Terdapat 3 kolom dalam dataset yang memiliki tiper data object, maka dari itu perlu dilakukannya konversi tipe data menjadi integer menggunakan kode:
