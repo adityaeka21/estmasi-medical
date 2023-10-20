@@ -58,9 +58,51 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 ```
 
+## Import Dataset
+Proses pembuatan model dilakukan di google collab, maka tahap yang harus dilakukan adalah:
+1. upload file API kaggle
+```bash
+from google.colab import files
+file.upload()
+```
+2. buat kolder penyimpanan file dataset
+```bash
+!mkdir -p ~/.kaggle
+!cp kaggle.json ~/.kaggle/
+!chmod 600 ~/.kaggle/kaggle.json
+!ls ~/.kaggle
+```
+3. download dataset
+```bash
+!kaggle datasets download -d azadshahvaladov/apartment-prices-for-azerbaijan-market
+```
+4. unzip file yang sudah di download
+```bash
+!mkdir medical-insurance-price-prediction
+!unzip medical-insurance-price-prediction.zip -d medical-insurance-price-prediction
+!ls medical-insurance-price-prediction
+```
+5. panggil dataset yang sudah di download
+```bash
+df = pd.read_csv('/content/medical-insurance-price-prediction/Medical_insurance.csv')
+```
 ## Data Cleaning
 
-Untuk melakukan sebuah proses menggunakan algoritma regresi linear maka tipe data yang dibutuhkan adalah integer. Terdapat 3 kolom dalam dataset yang memiliki tiper data object, maka dari itu perlu dilakukannya konversi tipe data menjadi integer menggunakan kode
+Untuk melakukan sebuah proses menggunakan algoritma regresi linear maka tipe data yang dibutuhkan adalah integer. Terdapat 3 kolom dalam dataset yang memiliki tiper data object, maka dari itu perlu dilakukannya konversi tipe data menjadi integer menggunakan kode:
+```bash
+# Konversi Smoker
+# Buat instance LabelEncoder
+label_encoder = LabelEncoder()
+
+# Terapkan LabelEncoder pada kolom 'smoker' dan simpan dalam kolom baru 'smoker2'
+df['smoker2'] = label_encoder.fit_transform(df['smoker'])
+
+# Konversi Gender
+df['sex2'] = label_encoder.fit_transform(df['sex'])
+
+# Konversi region
+df['region2'] = label_encoder.fit_transform(df['region'])
+```
 
 ## Modeling
 Tahapan ini membahas mengenai model machine learning yang digunakan untuk menyelesaikan permasalahan. Anda perlu menjelaskan tahapan dan parameter yang digunakan pada proses pemodelan.
