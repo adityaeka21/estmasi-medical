@@ -86,12 +86,26 @@ file.upload()
 ```bash
 df = pd.read_csv('/content/medical-insurance-price-prediction/Medical_insurance.csv')
 ```
+## Data Cleaning
+
+## Null values
 setelah import dataset maka perlu dilakukan pengecekan null values menggunakan cara:
 ```bash
 sns.heatmap(df.isnull())
 ```
-![Alt text](image.png)
-## Data Cleaning
+![Alt text](download.png)
+
+## Duplicates
+dilanjut pengecekan data yang duplikat:
+```bash
+# deteksi duplikasi data
+df.duplicated().sum()
+```
+dikarekan terdapat data yang duplikat sebanyak 1435 maka perlu dilakukan cleaning data duplikat tersebut dengan cara:
+```bash
+df = df.drop_duplicates() #menghapus duplikasi data
+df.duplicated().sum() #cek duplikat
+```
 
 Untuk melakukan sebuah proses menggunakan algoritma regresi linear maka tipe data yang dibutuhkan adalah integer. Terdapat 3 kolom dalam dataset yang memiliki tiper data object, maka dari itu perlu dilakukannya konversi tipe data menjadi integer menggunakan kode:
 ```bash
@@ -110,31 +124,42 @@ df['region2'] = label_encoder.fit_transform(df['region'])
 ```
 
 ## Modeling
-Tahapan ini membahas mengenai model machine learning yang digunakan untuk menyelesaikan permasalahan. Anda perlu menjelaskan tahapan dan parameter yang digunakan pada proses pemodelan.
-
-**Rubrik/Kriteria Tambahan (Opsional)**: 
-- Menjelaskan kelebihan dan kekurangan dari setiap algoritma yang digunakan.
-- Jika menggunakan satu algoritma pada solution statement, lakukan proses improvement terhadap model dengan hyperparameter tuning. **Jelaskan proses improvement yang dilakukan**.
-- Jika menggunakan dua atau lebih algoritma pada solution statement, maka pilih model terbaik sebagai solusi. **Jelaskan mengapa memilih model tersebut sebagai model terbaik**.
+tahapan pertama dalam melakukan modelling yaitu:
+1. seleksi fitur dan label:
+```bash
+features = ['age','sex2','bmi','children','smoker2','region2']
+x = df[features]
+y = df['charges']
+x.shape, y.shape
+```
+3. membagi data testing dan training
+```bash
+x_train, X_test, y_train, y_test = train_test_split(x,y,random_state=70)
+y_test.shape
+```
+5. lakukan proses modelling menggunakan regresi linear
+```bash
+lr = LinearRegression()
+lr.fit(x_train,y_train)
+pred = lr.predict(X_test)
+```
+7. cek akurasi model
+```bash
+score = lr.score(X_test, y_test)
+print('akurasi model regresi linier = ', score*100,"%")
+```
+dari proses modelling tersebut didapatkan akurasi sebesar **75.53782234810413 %**
 
 ## Evaluation
-Pada bagian ini anda perlu menyebutkan metrik evaluasi yang digunakan. Lalu anda perlu menjelaskan hasil proyek berdasarkan metrik evaluasi yang digunakan.
+setelah pembuatan model selesai dilanjutkan kepada uji model dengan melakukan testing dengan inputan yang sesuai dengan yang sudah di deklarasikan sebelumnya yaitu:
+```bash
+# 'age','sex2','bmi','children','smoker2','region2'
+input_data = np.array([[19,0,27.9,0,1,3]])
 
-Sebagai contoh, Anda memiih kasus klasifikasi dan menggunakan metrik **akurasi, precision, recall, dan F1 score**. Jelaskan mengenai beberapa hal berikut:
-- Penjelasan mengenai metrik yang digunakan
-- Menjelaskan hasil proyek berdasarkan metrik evaluasi
-
-Ingatlah, metrik evaluasi yang digunakan harus sesuai dengan konteks data, problem statement, dan solusi yang diinginkan.
-
-**Rubrik/Kriteria Tambahan (Opsional)**: 
-- Menjelaskan formula metrik dan bagaimana metrik tersebut bekerja.
+prediction = lr.predict(input_data)
+print('Estimasi Biaya Medis dalam US Dolar :', prediction)
+```
 
 ## Deployment
 [Hasil Deploy](https://estimasi-medical-adit.streamlit.app/).
-
-**---Ini adalah bagian akhir laporan---**
-
-_Catatan:_
-- _Anda dapat menambahkan gambar, kode, atau tabel ke dalam laporan jika diperlukan. Temukan caranya pada contoh dokumen markdown di situs editor [Dillinger](https://dillinger.io/), [Github Guides: Mastering markdown](https://guides.github.com/features/mastering-markdown/), atau sumber lain di internet. Semangat!_
-- Jika terdapat penjelasan yang harus menyertakan code snippet, tuliskan dengan sewajarnya. Tidak perlu menuliskan keseluruhan kode project, cukup bagian yang ingin dijelaskan saja.
 
