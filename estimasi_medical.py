@@ -12,6 +12,7 @@ children = st.number_input('Jumlah Tanggungan Anak')
 smoker2 = st.selectbox('Apakah Pasien Merokok', ['Yes', 'No'])
 region2 = st.selectbox('Wilayah Domisili', ['southeast','southwest', 'northwest','northeast'])
 
+LabelEncoder = label_encoder()
 sex_encoded = label_encoder_sex.transform([sex])[0]
 smoker_encoded = label_encoder_smoker.transform([smoker])[0]
 region_encoded = label_encoder_region.transform([region])[0]
