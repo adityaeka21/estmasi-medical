@@ -16,9 +16,9 @@ label_encoder_sex = LabelEncoder()
 label_encoder_smoker = LabelEncoder()
 label_encoder_region = LabelEncoder()
 
-sex_encoded = label_encoder_sex.transform([sex])[0]
-smoker_encoded = label_encoder_smoker.transform([smoker])[0]
-region_encoded = label_encoder_region.transform([region])[0]
+sex_encoded = label_encoder_sex.transform([sex2])[0]
+smoker_encoded = label_encoder_smoker.transform([smoker2])[0]
+region_encoded = label_encoder_region.transform([region2])[0]
 
 predict = ''
 
