@@ -123,6 +123,28 @@ df['sex2'] = label_encoder.fit_transform(df['sex'])
 df['region2'] = label_encoder.fit_transform(df['region'])
 ```
 
+Visualisasi data perokok berdasarkan jenis kelamin
+```
+sns.catplot(x="smoker", kind="count",hue = 'sex', palette="pink", data=df)
+```
+![image](https://github.com/adityaeka21/estmasi-medical/assets/148531157/64ff1b3a-b135-46e0-a244-45f542570847)
+
+Distribusi premi asuransi berdasarkan perokok dan non perokok
+```
+f= plt.figure(figsize=(12,5))
+
+ax=f.add_subplot(121)
+sns.distplot(df[(df.smoker == "no")]["charges"],color='c',ax=ax)
+ax.set_title('Distribution of charges for non-smokers')
+
+ax=f.add_subplot(122)
+sns.distplot(df[(df.smoker == "yes")]['charges'],color='b',ax=ax)
+ax.set_title('Distribution of charges for smokers')
+```
+![image](https://github.com/adityaeka21/estmasi-medical/assets/148531157/d889b157-52e3-413d-b896-b3b785e93cdc)
+![image](https://github.com/adityaeka21/estmasi-medical/assets/148531157/952f5227-5974-4c84-aba0-af39906d958e)
+
+
 ## Modeling
 tahapan pertama dalam melakukan modelling yaitu:
 1. seleksi fitur dan label:
